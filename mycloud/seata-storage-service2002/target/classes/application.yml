@@ -1,0 +1,45 @@
+server:
+  port: 2002
+
+spring:
+  application:
+    name: seata-storage-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seata_storage
+    username: root
+    password: 1234
+
+feign:
+  hystrix:
+    enabled: false
+
+logging:
+  level:
+    io:
+      seata: info
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+
+seata:
+  enabled: true
+  application-id: seata-storage-service
+  #自定义事务组名称需要与seata-server中的对应
+  tx-service-group: shop-public
+  service:
+    vgroup-mapping:
+      shop-public: default
+  registry:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      application: seata-server
+      username: nacos
+      password: nacos
+#dataSource 自动代理功能
+#  enable-auto-data-source-proxy: true
+

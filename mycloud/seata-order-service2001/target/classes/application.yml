@@ -1,0 +1,47 @@
+server:
+  port: 2001
+
+spring:
+  application:
+    name: seata-order-service
+  cloud:
+#    alibaba:
+#      seata:
+#
+#        tx-service-group: fsp_tx_group
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seata_order
+    username: root
+    password: 1234
+
+feign:
+  hystrix:
+    enabled: false
+  client:
+    config:
+      default:
+        #超时设置ms
+        readTimeout: 1000
+        connectTimeout: 1000
+
+logging:
+  level:
+    io:
+      seata: info
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+
+seata:
+  enabled: true
+  application-id: seata-order-service
+  #自定义事务组名称需要与seata-server中的对应
+  tx-service-group: shop-public
+  service:
+    vgroup-mapping:
+      shop-public: default
+
